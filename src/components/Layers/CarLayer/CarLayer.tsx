@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useMapContext } from '../../../context/MapContext';
 import { Threebox } from 'threebox-plugin';
-import type { Feature, Point } from "geojson";
+import type { Feature, Point, GeoJsonProperties  } from "geojson";
 
 type Props = {
   map: mapboxgl.Map
@@ -101,13 +101,13 @@ const CarLayer = ({map, modelReady} : Props) => {
         // place models for currently visible points
         const isReadyPoll = setInterval(() => {
           
-          const features = map.queryRenderedFeatures({ layers: ['ANCHORS'] }) as Feature<Point>[];
-          const featurePoints = features.map(f => (
-            { 
-              lng: f.geometry.coordinates[0], 
-              lat: f.geometry.coordinates[1]
-            }
-          ));
+          const features = map.queryRenderedFeatures({ layers: ['ANCHORS'] }) as Feature<GeoJSON.Geometry, GeoJsonProperties>[];
+          const featurePoints = features
+          .filter((f): f is Feature<Point> => f.geometry.type === 'Point') // type guard
+          .map(f => ({
+            lng: f.geometry.coordinates[0],
+            lat: f.geometry.coordinates[1]
+          }));
 
           if(featurePoints.length === 0) { 
             return; 
@@ -162,9 +162,14 @@ const CarLayer = ({map, modelReady} : Props) => {
       setIsLoading(false);
     };
     const updateModels = () => {
-      const features = map.queryRenderedFeatures({ layers: ['ANCHORS'] }) as Feature<Point>[];
-      const points = features.map(f => f.geometry.coordinates);
-      displayModels(points);      
+      const features = map.queryRenderedFeatures({ layers: ['ANCHORS'] }) as Feature<GeoJSON.Geometry, GeoJsonProperties>[];
+      const featurePoints = features
+      .filter((f): f is Feature<Point> => f.geometry.type === 'Point') // type guard
+      .map(f => ({
+        lng: f.geometry.coordinates[0],
+        lat: f.geometry.coordinates[1]
+      }));
+      displayModels(featurePoints);      
     }
     
 
