@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode, type Dispatch, type SetStateAction } from 'react';
 import type { Map as MapboxMap } from 'mapbox-gl';
 import { MapMode } from '../utils/utils.tsx'
+import type { Feature, Point } from "geojson";
 
 type ProviderProps = { children: ReactNode }
 type LatLng = [number, number];
@@ -18,8 +19,8 @@ export type MapCtx = {
   setCarModelReady: React.Dispatch<React.SetStateAction<boolean>>,
   treeModelReady: boolean, 
   setTreeModelReady: React.Dispatch<React.SetStateAction<boolean>>,  
-  userLocation: Record<string, unknown>,
-  setUserLocation: React.Dispatch<React.SetStateAction<Record<string, unknown>>>,
+  userLocation: Feature,
+  setUserLocation: React.Dispatch<React.SetStateAction<Feature>>,
   isLoading: boolean,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   modelCount: number,
@@ -51,7 +52,7 @@ export function MapProvider({ children }: ProviderProps) {
   const initialPitch = Number(import.meta.env.VITE_MAP_DESKTOP_PITCH) || 0;
   const [mapPitch, setMapPitch] = useState<number>(initialPitch);
 
-  const [userLocation, setUserLocation] = useState<Record<string, unknown>>({});
+  const [userLocation, setUserLocation] = useState<Feature<Point> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [modelCount, setModelCount] = useState<number>(3);
   const [selectedSpaceId, setSelectedSpaceId] = useState<number | null>(null);

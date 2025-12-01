@@ -1,39 +1,51 @@
 import { useEffect, useRef } from "react";
 import { useMapContext } from '../../../context/MapContext';
+import type { GeoJSONSource } from "mapbox-gl";
 
-const GeolocationLayer = ({map}) => {
+type Props = {
+  map: mapboxgl.Map
+}
+
+const GeolocationLayer = ({map} : Props) => {
 
     const initializedRef = useRef(false);
     const { userLocation } = useMapContext();   
     
+    const isGeoJSONSource = (source: mapboxgl.Source | undefined): source is GeoJSONSource => { 
+      return !!source && "setData" in source;
+    }
+
     useEffect(() => {
       if (!map || initializedRef.current) return;
       initializedRef.current = true;
       initializeLayer();
   
       return () => {
-        if (map && map.isStyleLoaded()) {}
+        if (map && map.isStyleLoaded()) {
+
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }
   
     }, [map]);
 
     useEffect(() => {
-      if(!map) { return;}
-      if(typeof map.getSource("geolocation-src").setData(userLocation) === "undefined") return;
-      //if(Object.keys(userLocation).length === 0) return;
+      if (!map || !userLocation) return;
 
-      map.getSource("geolocation-src").setData({
-        "type": "FeatureCollection",
-        "features": [
-          userLocation
-        ]
+      const source = map.getSource("geolocation-src");
+
+      if (!isGeoJSONSource(source)) return;
+
+      source.setData({
+        type: "FeatureCollection",
+        features: [userLocation],
       });
 
-    }, [userLocation])
+    }, [map, userLocation]);
 
     const initializeLayer = () => {
       const x = 150
-        const pulsingDot = {
+      const pulsingDot = {
             width: x,
             height: x,
             data: new Uint8Array(x * x * 4),
@@ -44,7 +56,7 @@ const GeolocationLayer = ({map}) => {
               const canvas = document.createElement('canvas');
               canvas.width = this.width;
               canvas.height = this.height;
-              this.context = canvas.getContext('2d');
+              this.context = canvas.getContext('2d') as CanvasRenderingContext2D;
             },
         
             // Call once before every frame where the icon will be used.
@@ -54,7 +66,7 @@ const GeolocationLayer = ({map}) => {
         
               const radius = (x / 2) * 0.3;
               const outerRadius = (x / 2) * 0.7 * t + radius;
-              const context = this.context;
+              const context = this.context as CanvasRenderingContext2D;
         
               // Draw the outer circle.
               context.clearRect(0, 0, this.width, this.height);
@@ -83,8 +95,7 @@ const GeolocationLayer = ({map}) => {
               context.lineWidth = 2 + 4 * (1 - t);
               context.fill();
               context.stroke();
-        
-                  // Update this image's data with data from the canvas.
+      
               this.data = context.getImageData(
                 0,
                 0,
@@ -99,11 +110,11 @@ const GeolocationLayer = ({map}) => {
               // Return `true` to let the map know that the image was updated.
               return true;
            }
-         }
+      }
 
-        map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
+      map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
 
-        // Define value based styling rules
+      // Define value based styling rules
       map.addSource("geolocation-src", {"type": "geojson", "data": {"type": "FeatureCollection", "features": []}});        
       map.addLayer({
         "id": "geolocation-layer",
@@ -115,17 +126,7 @@ const GeolocationLayer = ({map}) => {
           'icon-rotation-alignment': 'map',          
           "icon-image": "pulsing-dot"
         }
-      })
-      /*map.addLayer({
-        "id": "geolocation-layer",
-        "type": "circle",
-        "source": "geolocation-src",
-        "layout": {
-          "circle-radius": 10,
-          "circle-color": "#5A8DFF"
-        }
-      })*/
-       
+      })  
     }    
 }
 

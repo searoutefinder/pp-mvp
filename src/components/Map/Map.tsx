@@ -132,13 +132,6 @@ const Map = () => {
       //mapRef.current.dragRotate.disable();
       //mapRef.current.touchZoomRotate.disableRotation();
 
-      mapRef.current.on("idle", () => {
-        console.log(mapRef.current.getCenter());
-        console.log(mapRef.current.getBearing());
-        console.log(mapRef.current.getPitch());
-        console.log(mapRef.current.getZoom());
-      });
-
       mapRef.current.on("load", onLoadHandler)
 
     return () => {
