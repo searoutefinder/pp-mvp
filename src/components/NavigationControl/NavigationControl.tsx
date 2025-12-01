@@ -1,11 +1,18 @@
 // Context
 import { useMapContext } from '../../context/MapContext';
 
-// Icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons'
+// Geojson
+import type { Feature, Point } from "geojson";
 
-const NavigationControl = ({map}) => {
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
+
+type Props = {
+  map: mapboxgl.Map
+}
+
+const NavigationControl = ({map} : Props) => {
   
     const { setUserLocation, setIsLoading, mapPitch, setMapPitch } = useMapContext();
 
@@ -15,14 +22,21 @@ const NavigationControl = ({map}) => {
         alert('Geolocation is not supported by your browser.')
         return;
       }
-      const watchId = navigator.geolocation.watchPosition(
-        (position) => {     
-          let feature = {"type": "Feature", "properties": {}, "geometry": {"type": "Point", "coordinates": [position.coords.longitude, position.coords.latitude]}}        
+      const watchId: number = navigator.geolocation.watchPosition(
+        (position: GeolocationPosition) => {     
+          const feature: Feature<Point> = {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              type: "Point",
+              coordinates: [position.coords.longitude, position.coords.latitude],
+            },
+          };
           console.log(feature)
           setUserLocation(feature);       
           setIsLoading(false);
         },
-        (error) => {
+        (error: GeolocationPositionError) => {
           switch (true) {
             case error.code === 1:
               alert('Permission denied. Please enable location access in your browser settings and refresh the map!');

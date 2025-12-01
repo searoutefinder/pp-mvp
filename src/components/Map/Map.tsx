@@ -189,7 +189,7 @@ const Map = () => {
         <Legend />      
 
       </div>
-      <InfoBox onClose={popupClosedHandler} parkingSpaceData={popupData}/>
+      <InfoBox onClose={popupClosedHandler} parkingSpaceDataProperties={popupData}/>
       {isLoading && <LoadingSpinner />}
     </div>
   )

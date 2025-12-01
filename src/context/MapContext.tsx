@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode, type Dispatch, type SetStateAction } from 'react';
 import type { Map as MapboxMap } from 'mapbox-gl';
-import { MapMode } from '../utils/utils.tsx'
+import { MapMode } from '../utils/utils'
 import type { Feature, Point } from "geojson";
 
 type ProviderProps = { children: ReactNode }

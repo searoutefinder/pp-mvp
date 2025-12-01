@@ -2,7 +2,7 @@ import * as React from "react";
 import { useCallback } from 'react';
 import { useMapContext } from '../../context/MapContext';
 
-type ParkingSpaceData = {
+type parkingSpaceDataPropertiesType = {
   available: boolean,
   carRegistrationNumbers: string[],
   diff: Record<string, string>,
@@ -18,10 +18,10 @@ type ParkingSpaceData = {
 
 type Props = {
   onClose: (visible: boolean) => void
-  parkingSpaceData?: ParkingSpaceData | null
+  parkingSpaceDataProperties?: parkingSpaceDataPropertiesType | null
 }
 
-const InfoBox = ({onClose, parkingSpaceData} : Props) => {
+const InfoBox = ({onClose, parkingSpaceDataProperties} : Props) => {
   
   const { isPopupVisible } = useMapContext(); 
 
@@ -29,10 +29,10 @@ const InfoBox = ({onClose, parkingSpaceData} : Props) => {
     onClose(false)
   }, [onClose]);
 
-  if (!parkingSpaceData ) return null; 
+  if (!parkingSpaceDataProperties ) return null; 
 
-  const isAvailable = parkingSpaceData.available;
-  const hasDiffData = parkingSpaceData.hasOwnProperty("diff");
+  const isAvailable = parkingSpaceDataProperties.available;
+  const hasDiffData = parkingSpaceDataProperties.hasOwnProperty("diff");
 
   return (
       <div className={`z-50 rounded-t-xl lg:rounded-none absolute flex flex-col p-5 left-0 bottom-0 lg:bottom-auto lg:left-1/8 lg:top-1/2  lg:transform lg:-translate-y-1/2 w-full lg:w-1/4 bg-[rgba(29,29,29,0.8)] ${!isPopupVisible ? 'hidden' : ''}`}>
@@ -59,9 +59,9 @@ const InfoBox = ({onClose, parkingSpaceData} : Props) => {
             </span>
           </h3>
           <div className="w-1/2 uppercase text-white justify-end flex flex-row items-baseline gap-2">
-            <span className="text-xl lg:text-3xl leading-none">{hasDiffData ? parkingSpaceData.diff.hours : ''}</span>
+            <span className="text-xl lg:text-3xl leading-none">{hasDiffData ? parkingSpaceDataProperties.diff.hours : ''}</span>
             <span className="text-xs leading-none">hours</span>
-            <span className="text-xl lg:text-3xl leading-none">{hasDiffData ? parkingSpaceData.diff.minutes : ''}</span>
+            <span className="text-xl lg:text-3xl leading-none">{hasDiffData ? parkingSpaceDataProperties.diff.minutes : ''}</span>
             <span className="text-xs leading-none">minutes</span>
           </div>
         </div>
@@ -69,8 +69,8 @@ const InfoBox = ({onClose, parkingSpaceData} : Props) => {
         {!isAvailable ? 
           <div className="flex flex-row w-full border-b-2 border-[#3dbeff]/50 py-5 items-center">
             <h3 className="w-1/2 uppercase text-xs text-[#E2E2E2]">License plate</h3>
-            <p className="w-1/2 text-[#FFFFFF] uppercase  justify-end flex text-xl lg:text-3xl">{parkingSpaceData.hasOwnProperty("carRegistrationNumbers") ? parkingSpaceData.carRegistrationNumbers
-.length > 0 ? parkingSpaceData.carRegistrationNumbers[0] : `N/A` : ''}</p>
+            <p className="w-1/2 text-[#FFFFFF] uppercase  justify-end flex text-xl lg:text-3xl">{parkingSpaceDataProperties.hasOwnProperty("carRegistrationNumbers") ? parkingSpaceData.carRegistrationNumbers
+.length > 0 ? parkingSpaceDataProperties.carRegistrationNumbers[0] : `N/A` : ''}</p>
           </div>       
           : ''
         }
