@@ -127,7 +127,9 @@ const GeolocationLayer = ({map} : Props) => {
           "icon-image": "pulsing-dot"
         }
       })  
-    }    
+    }
+    
+    return null;
 }
 
 export default GeolocationLayer;
