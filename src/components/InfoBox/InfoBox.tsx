@@ -69,7 +69,7 @@ const InfoBox = ({onClose, parkingSpaceDataProperties} : Props) => {
         {!isAvailable ? 
           <div className="flex flex-row w-full border-b-2 border-[#3dbeff]/50 py-5 items-center">
             <h3 className="w-1/2 uppercase text-xs text-[#E2E2E2]">License plate</h3>
-            <p className="w-1/2 text-[#FFFFFF] uppercase  justify-end flex text-xl lg:text-3xl">{parkingSpaceDataProperties.hasOwnProperty("carRegistrationNumbers") ? parkingSpaceData.carRegistrationNumbers
+            <p className="w-1/2 text-[#FFFFFF] uppercase  justify-end flex text-xl lg:text-3xl">{parkingSpaceDataProperties.hasOwnProperty("carRegistrationNumbers") ? parkingSpaceDataProperties.carRegistrationNumbers
 .length > 0 ? parkingSpaceDataProperties.carRegistrationNumbers[0] : `N/A` : ''}</p>
           </div>       
           : ''
