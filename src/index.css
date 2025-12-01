@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sofia-sans-semibold {
+  font-family: "Sofia Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+.mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib {
+  display:none !important;
+}
+
+@layer base {   
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;    
+    padding: 0;    
+    box-sizing: border-box;
+    font-family: "Sofia Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;    
+  }
+
+  html {    
+    font-family: sans-serif;
+  }
+}
