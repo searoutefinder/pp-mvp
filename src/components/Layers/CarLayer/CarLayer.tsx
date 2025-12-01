@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useMapContext } from '../../../context/MapContext';
 import { Threebox } from 'threebox-plugin';
+import type { Feature, Point } from "geojson";
 
 type Props = {
   map: mapboxgl.Map
@@ -100,7 +101,7 @@ const CarLayer = ({map, modelReady} : Props) => {
         // place models for currently visible points
         const isReadyPoll = setInterval(() => {
           
-          const features = map.queryRenderedFeatures({ layers: ['ANCHORS'] });
+          const features = map.queryRenderedFeatures({ layers: ['ANCHORS'] }) as Feature<Point>[];
           const featurePoints = features.map(f => (
             { 
               lng: f.geometry.coordinates[0], 
@@ -161,7 +162,7 @@ const CarLayer = ({map, modelReady} : Props) => {
       setIsLoading(false);
     };
     const updateModels = () => {
-      const features = map.queryRenderedFeatures({ layers: ['ANCHORS'] });
+      const features = map.queryRenderedFeatures({ layers: ['ANCHORS'] }) as Feature<Point>[];
       const points = features.map(f => f.geometry.coordinates);
       displayModels(points);      
     }
