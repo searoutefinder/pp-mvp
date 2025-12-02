@@ -86,7 +86,7 @@ const CarLayer = ({map, modelReady} : Props) => {
         obj: import.meta.env.VITE_CAR_MODEL_URL,
         type: "gltf",
         scale: { x: 1, y: 1, z: 1 },
-        rotation: { x: 90, y: 15, z: 0 },
+        rotation: { x: 90, y: 0, z: 0 },
         units: "meters",
         anchor: "center"
       };
@@ -154,7 +154,7 @@ const CarLayer = ({map, modelReady} : Props) => {
         const worldPos = window.tb.projectToWorld([pos[0], pos[1], 0])
         clone.position.set(worldPos.x, worldPos.y, worldPos.z);
         clone.scale.set(0.025, 0.025, 0.025);
-        clone.rotation.set(0, 0, -117 * (Math.PI / 180));
+        clone.rotation.set(0, 0, 80 * (Math.PI / 180));
         window.tb.add(clone);          
       });
 
