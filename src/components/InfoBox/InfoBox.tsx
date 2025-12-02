@@ -37,12 +37,12 @@ const InfoBox = ({onClose, parkingSpaceDataProperties} : Props) => {
   return (
       <div className={`z-50 rounded-t-xl lg:rounded-none absolute flex flex-col p-5 left-0 bottom-0 lg:bottom-auto lg:left-1/8 lg:top-1/2  lg:transform lg:-translate-y-1/2 w-full lg:w-1/4 bg-[rgba(29,29,29,0.8)] ${!isPopupVisible ? 'hidden' : ''}`}>
 
-        <div className="flex flex-row w-full border-b-2 border-[#3dbeff]/50 pb-5">
+        <div className="flex flex-row w-full border-b-2 border-[rgba(61,190,255,0.5)] pb-5">
           <h2 className="w-4/5 flex flex-col">
-            <span className={`flex text-md lg:text-xl sofia-sans-semibold ${isAvailable ? `text-[#3dbeff]/100` : `text-[#D04D4F]/80`}`}>
+            <span className={`flex text-md lg:text-xl sofia-sans-semibold ${isAvailable ? `text-[rgba(61,190,255,1)]` : `text-[rgba(208,77,79,0.8)]`}`}>
               {isAvailable ? `Available` : `Occupied`}
             </span>
-            <span className='flex text-[#e2e2e2]/70 text-md lg:text-xl sofia-sans-semibold'>Parking Spot</span>
+            <span className='flex text-[rgba(226,226,226,0.7)] text-md lg:text-xl sofia-sans-semibold'>Parking Spot</span>
           </h2>
           <button type="button" className="w-1/5 flex justify-end cursor-pointer" onClick={closeClickHandler}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#3dbeff" strokeOpacity="0.5" className="w-8 h-8">
@@ -51,10 +51,10 @@ const InfoBox = ({onClose, parkingSpaceDataProperties} : Props) => {
           </button>
         </div>
 
-        <div className="flex flex-row w-full border-b-2 border-[#3dbeff]/50 py-5 items-center">
+        <div className="flex flex-row w-full border-b-2 border-[rgba(61,190,255,0.5)] py-5 items-center">
           <h3 className="w-1/2 uppercase text-xs items-center">
             <span className="text-[#e2e2e2] mr-1">Time</span>
-            <span className={`${isAvailable ? `text-[#3dbeff]/100` : `text-[#D04D4F]/80`}`}>
+            <span className={`${isAvailable ? `text-[rgba(61,190,255,1)]` : `text-[rgba(208,77,79,0.8)]`}`}>
               {isAvailable ? `Available` : `Occupied`}
             </span>
           </h3>
@@ -67,7 +67,7 @@ const InfoBox = ({onClose, parkingSpaceDataProperties} : Props) => {
         </div>
 
         {!isAvailable ? 
-          <div className="flex flex-row w-full border-b-2 border-[#3dbeff]/50 py-5 items-center">
+          <div className="flex flex-row w-full border-b-2 border-[rgba(61,190,255,0.5)] py-5 items-center">
             <h3 className="w-1/2 uppercase text-xs text-[#E2E2E2]">License plate</h3>
             <p className="w-1/2 text-[#FFFFFF] uppercase  justify-end flex text-xl lg:text-3xl">{parkingSpaceDataProperties.hasOwnProperty("carRegistrationNumbers") ? parkingSpaceDataProperties.carRegistrationNumbers
 .length > 0 ? parkingSpaceDataProperties.carRegistrationNumbers[0] : `N/A` : ''}</p>

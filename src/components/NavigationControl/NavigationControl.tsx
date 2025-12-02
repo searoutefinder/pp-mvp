@@ -1,3 +1,5 @@
+import * as React from "react";
+
 // Context
 import { useMapContext } from '../../context/MapContext';
 
@@ -83,21 +85,21 @@ const NavigationControl = ({map} : Props) => {
     return (
     <div className="absolute top-5 right-5 flex flex-col items-center z-10">
       <button
-        className="cursor-pointer w-10 h-10 text-white bg-black/60 border border-2 border-blue-500 rounded-t-3xl text-xl leading-none"
+        className="cursor-pointer w-10 h-10 text-white bg-[rgba(0,0,0,0.6)] border border-2 border-blue-500 rounded-t-3xl text-xl leading-none"
         title="Zoom In"
         onClick={mapZoomInClickedHandler}
       >
         +
       </button>
       <button
-        className="cursor-pointer w-10 h-10 text-white bg-black/60 border border-2 border-blue-500 rounded-b-3xl text-xl leading-none -mt-px"
+        className="cursor-pointer w-10 h-10 text-white bg-[rgba(0,0,0,0.6)] border border-2 border-blue-500 rounded-b-3xl text-xl leading-none -mt-px"
         title="Zoom Out"
         onClick={mapZoomOutClickedHandler}
       >
         –
       </button>
       <button            
-        className="cursor-pointer w-10 h-10 mt-3 pt-0 text-sm text-white bg-black/60 rounded-full"
+        className="cursor-pointer w-10 h-10 mt-3 pt-0 text-sm text-white bg-[rgba(0,0,0,0.6)] rounded-full"
         title="Switch dimensions"
         onClick={pitchChangedHandler}
       >
